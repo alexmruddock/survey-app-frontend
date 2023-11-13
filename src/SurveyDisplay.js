@@ -45,6 +45,14 @@ function renderQuestion(question, index) {
         </div>
       );
 
+    case 'open_text':
+      return (
+        <div key={index}>
+          <p>{question.question}</p>
+          <textarea name={`question-${index}`} />
+        </div>
+      );
+
     default:
       return <p key={index}>Unsupported question type: {question.type}</p>;
   }
