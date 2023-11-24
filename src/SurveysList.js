@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 function SurveysList() {
   const [surveys, setSurveys] = useState([]);
 
+  // Fetch all surveys on component mount
   useEffect(() => {
     fetch(
       "https://bookish-pancake-q7w7vvr66ggfxp5j-3000.app.github.dev/get-surveys"
@@ -19,6 +20,7 @@ function SurveysList() {
       .catch((error) => console.error("Error fetching surveys:", error));
   }, []);
 
+  // Function to copy the survey link to the clipboard
   function copyToClipboard(surveyId) {
     const url = `${window.location.origin}/survey/${surveyId}`; // Construct the survey URL
     navigator.clipboard
@@ -29,11 +31,21 @@ function SurveysList() {
       .catch((err) => console.error("Error copying link:", err));
   }
 
+  // Function to delete a survey
   function deleteSurvey(surveyId) {
     if (window.confirm("Are you sure you want to delete this survey?")) {
+      console.log("Deleting survey:", surveyId);
+      
+      const token = localStorage.getItem("token");
+
       fetch(
         `https://bookish-pancake-q7w7vvr66ggfxp5j-3000.app.github.dev/delete-survey/${surveyId}`,
-        { method: "DELETE" }
+        { 
+          method: "DELETE",
+          headers: {
+            'Authorization': `Bearer ${token}`
+          } 
+        }
       )
       .then((response) => {
         if (!response.ok) {
