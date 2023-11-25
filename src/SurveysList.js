@@ -1,6 +1,7 @@
 // SurveysList.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function SurveysList() {
   const [surveys, setSurveys] = useState([]);
@@ -35,31 +36,38 @@ function SurveysList() {
   function deleteSurvey(surveyId) {
     if (window.confirm("Are you sure you want to delete this survey?")) {
       console.log("Deleting survey:", surveyId);
-      
+
       const token = localStorage.getItem("token");
 
       fetch(
         `https://bookish-pancake-q7w7vvr66ggfxp5j-3000.app.github.dev/delete-survey/${surveyId}`,
-        { 
+        {
           method: "DELETE",
           headers: {
-            'Authorization': `Bearer ${token}`
-          } 
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.text();
-      })
-      .then(() => {
-        setSurveys(surveys.filter((survey) => survey._id !== surveyId)); // Update state to reflect deletion
-        alert("Survey deleted successfully");
-      })
-      .catch((error) => console.error("Error deleting survey:", error));
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(() => {
+          setSurveys(surveys.filter((survey) => survey._id !== surveyId)); // Update state to reflect deletion
+          alert("Survey deleted successfully");
+        })
+        .catch((error) => console.error("Error deleting survey:", error));
     }
-  }  
+  }
+
+  const navigate = useNavigate();
+
+  function viewResponses(surveyId) {
+    console.log("Viewing responses for survey:", surveyId);
+    navigate(`/survey-responses/${surveyId}`);
+  }
 
   return (
     <div>
@@ -88,6 +96,12 @@ function SurveysList() {
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mx-2"
                   >
                     Copy Link
+                  </button>
+                  <button
+                    onClick={() => viewResponses(survey._id)}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300 ease-in-out mx-2"
+                  >
+                    View Responses
                   </button>
                   <button
                     onClick={() => deleteSurvey(survey._id)}

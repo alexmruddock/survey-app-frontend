@@ -15,3 +15,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.thank-you-message {
+  text-align: center;
+  padding: 20px;
+  /* additional styles as needed */
+}
