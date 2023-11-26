@@ -47,7 +47,7 @@ function App() {
   return (
     <Router>
       <div className="App bg-gray-100 min-h-screen flex flex-col items-center pt-8">
-        <LocalStorageDisplay />
+        { /* <LocalStorageDisplay /> */ }
 
         <Routes>
           <Route path="/" element={<Home userRole={userRole} />} />
