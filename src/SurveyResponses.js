@@ -10,7 +10,6 @@ function SurveyResponses() {
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken"); // Retrieve the stored token
-
     
     // Fetch the survey details
     fetch(
@@ -77,41 +76,51 @@ function SurveyResponses() {
   };
 
   return (
-    <div>
-      <h2>Survey Responses</h2>
-      <button onClick={handleAnalyzeResponses}>Analyze Responses</button>
-      {
-        /* Display the responses here, e.g., in a table */
-        responses.length > 0 ? (
-          <table className="min-w-full table-auto">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-2">User Email</th>
-                <th className="px-4 py-2">Answers</th>
-              </tr>
-            </thead>
-            <tbody>
-              {responses.map((response) => (
-                <tr key={response._id} className="bg-white border-b">
-                  <td className="px-4 py-2">{response.userEmail}</td>
-                  <td className="px-4 py-2">
-                    <ul>
-                      {response.answers.map((answer, index) => (
-                        <li key={index}>
-                          <strong>{answer.question}</strong>: {answer.answer}
-                        </li>
-                      ))}
-                    </ul>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        ) : (
-          <p>No responses yet</p>
-        )
-      }
-    </div>
+    <div className="p-6 bg-white shadow-md rounded-lg">
+  <h2 className="text-2xl font-bold text-gray-800 mb-6">Survey Responses</h2>
+  <button 
+    onClick={handleAnalyzeResponses} 
+    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mb-4 transition duration-300"
+  >
+    Analyze Responses
+  </button>
+  {
+    responses.length > 0 ? (
+      <table className="min-w-full table-auto border-collapse bg-white shadow-sm rounded-lg">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+              User Email
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider border-b border-gray-200">
+              Answers
+            </th>
+          </tr>
+        </thead>
+        <tbody className="bg-white">
+          {responses.map((response) => (
+            <tr key={response._id} className="hover:bg-gray-50">
+              <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
+                {response.userEmail}
+              </td>
+              <td className="px-6 py-4 whitespace-nowrap border-b border-gray-200">
+                <ul className="list-disc pl-6">
+                  {response.answers.map((answer, index) => (
+                    <li key={index} className="text-gray-700">
+                      <strong>{answer.question}</strong>: {answer.answer}
+                    </li>
+                  ))}
+                </ul>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p className="text-gray-600">No responses yet</p>
+    )
+  }
+</div>
   );
 }
 
