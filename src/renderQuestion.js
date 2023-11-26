@@ -15,6 +15,7 @@ function renderQuestion(question, index) {
           </div>
         );
   
+      case 'rating_scale':
       case 'rating':
         return (
           <div key={index} className="mb-4">

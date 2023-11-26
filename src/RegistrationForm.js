@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function RegistrationForm() {
+function RegistrationForm({ setUserRole }) {
     // Initialize state variables
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
@@ -18,8 +18,14 @@ function RegistrationForm() {
 
         const data = await response.json();
         if (response.ok) {
-            localStorage.setItem('token', data.token); // Store the token in localStorage
+            console.log("Data: ", data);
+            // Store the tokens in localStorage
+            localStorage.setItem('accessToken', data.accessToken);
+            console.log("Token: ", data.accessToken); // Log the token in the console for debugging purposes
             localStorage.setItem('userEmail', email); // Store the user's email in localStorage
+            // fetch user role here and update state in App
+            fetchUserRole().then(role => setUserRole(role)); 
+            // Navigate to the home page
             navigate('/'); 
         } else {
             console.error('Login failed:', data.message);
@@ -57,5 +63,18 @@ function RegistrationForm() {
         </form>
     );
 }
+
+async function fetchUserRole() {
+    const response = await fetch("https://bookish-pancake-q7w7vvr66ggfxp5j-3000.app.github.dev/fetch-user", {
+      headers: {
+        "Authorization": `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data.role;
+    }
+    return null;
+  }
 
 export default RegistrationForm;

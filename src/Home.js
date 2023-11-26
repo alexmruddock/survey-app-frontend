@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SurveysList from './SurveysList';
 
-function Home() {
-  const isLoggedIn = !!localStorage.getItem('token');
+function Home({ userRole }) {
+  const isLoggedIn = !!localStorage.getItem('accessToken');
   const userEmail = localStorage.getItem('userEmail');
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
     localStorage.removeItem('userEmail');
     window.location.reload(); // Refresh the page to update the UI
   };
@@ -17,16 +17,22 @@ function Home() {
       <nav className="mb-4">
         {isLoggedIn ? (
           <>
-            <div className="mb-4">Welcome, {userEmail}</div>
+            <div className="mb-4">
+              Welcome, {userEmail} 
+              <span className="ml-2 text-sm text-gray-600">({userRole})</span> 
+              {/* Display user role next to the email */}
+            </div>
             <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
               Logout
             </button>
-            <Link 
-              to="/create" 
-              className="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Create New Survey
-            </Link>
+            {userRole === 'admin' && (
+              <Link 
+                to="/create" 
+                className="ml-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Create New Survey
+              </Link>
+            )}
           </>
         ) : (
           <>
@@ -45,7 +51,7 @@ function Home() {
           </>
         )}
       </nav>
-      <SurveysList />
+      <SurveysList userRole={userRole}/>
     </div>
   );
 }

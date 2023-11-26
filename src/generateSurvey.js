@@ -1,6 +1,6 @@
 // Function to call the API for generating a survey
 export async function generateSurvey(description) {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem("accessToken");
 
   console.log("Description received in generateSurvey:", description);
   

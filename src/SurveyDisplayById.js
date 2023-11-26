@@ -8,8 +8,13 @@ function SurveyDisplayById() {
   const { surveyId } = useParams();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
+
+  const userEmail = localStorage.getItem("userEmail"); 
+  const surveyCountKey = `surveyCount_${surveyId}_${userEmail}`;
+  
+  // Retrieve the submission count from local storage
   const [submissionCount, setSubmissionCount] = useState(
-    parseInt(localStorage.getItem('surveyCount_${surveyId}')) || 0
+    parseInt(localStorage.getItem(surveyCountKey)) || 0 // If the key doesn't exist, default to 0
   );
 
   useEffect(() => {
@@ -38,12 +43,12 @@ function SurveyDisplayById() {
     submitSurvey(surveyId, answers)
       .then(() => {
         setResponses({}); // Clear responses
-        setIsSubmitted(true); 
+        setIsSubmitted(true); // Set isSubmitted to true
 
         // update submission count
-        const newCount = submissionCount + 1; 
-        setSubmissionCount(newCount); 
-        localStorage.setItem('surveyCount_${surveyId}', newCount.toString());
+        const newCount = submissionCount + 1; // Increment the submission count
+        setSubmissionCount(newCount); // Update the state
+        localStorage.setItem(surveyCountKey, newCount.toString()); // Update local storage
 
         setTimeout(() => {
           navigate("/");
