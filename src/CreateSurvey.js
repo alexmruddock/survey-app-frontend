@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BackButton from "./BackButton";
 import SurveyForm from "./SurveyForm";
 import SurveyDisplay from "./SurveyDisplay";
 import { generateSurvey } from "./generateSurvey";
@@ -29,7 +30,9 @@ function CreateSurvey() {
 
   return (
     <div>
+      <BackButton />
       <SurveyForm onSubmit={handleGenerate} />
+      <div className="h-8"></div>
       <SurveyDisplay survey={survey} />
       {survey && (
         <button
@@ -39,7 +42,6 @@ function CreateSurvey() {
           Save Survey
         </button>
       )}
-      {/* Optionally display the survey after creation */}
     </div>
   );
 }

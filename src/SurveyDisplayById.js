@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import BackButton from "./BackButton";
 import "./index.css";
 
 function SurveyDisplayById() {
@@ -9,9 +10,9 @@ function SurveyDisplayById() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const navigate = useNavigate();
 
-  const userEmail = localStorage.getItem("userEmail"); 
+  const userEmail = localStorage.getItem("userEmail");
   const surveyCountKey = `surveyCount_${surveyId}_${userEmail}`;
-  
+
   // Retrieve the submission count from local storage
   const [submissionCount, setSubmissionCount] = useState(
     parseInt(localStorage.getItem(surveyCountKey)) || 0 // If the key doesn't exist, default to 0
@@ -139,20 +140,23 @@ function SurveyDisplayById() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <BackButton />
+      <h2 className="text-3xl font-semibold text-gray-800 my-4">
         {survey.title}
       </h2>
       <span className="text-sm text-gray-600">
         Times Completed: {submissionCount}
       </span>
-      <p className="text-gray-600 mb-4">{survey.description}</p>
+      <p className="text-gray-700 text-lg my-4">{survey.description}</p>
+
       {survey.questions.map((question, index) =>
         renderQuestion(question, index)
       )}
+
       <button
         onClick={handleSubmit}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="mt-6 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-lg transition duration-300 ease-in-out"
       >
         Submit Survey
       </button>
