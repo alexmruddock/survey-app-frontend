@@ -4,14 +4,14 @@ import authenticatedFetch from "./authenticatedFetch";
 import jsPDF from "jspdf";
 
 function SurveyResponses() {
-  const [responses, setResponses] = useState([]);
   const [surveyTitle, setSurveyTitle] = useState("");
+  const [responses, setResponses] = useState([]);
   const { surveyId } = useParams();
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken"); // Retrieve the stored token
 
-    /*
+    
     // Fetch the survey details
     fetch(
       `https://bookish-pancake-q7w7vvr66ggfxp5j-3000.app.github.dev/retrieve-survey/${surveyId}`,
@@ -19,13 +19,12 @@ function SurveyResponses() {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-      .then((response) => response.json())
-      .then((data) => {
+      .then(response => response.json())
+      .then(data => {
         setSurveyTitle(data.title); // Set the survey title
-        setResponses(data.responses); // Set the responses (assuming responses are part of the survey data)
       })
       .catch((error) => console.error("Error fetching survey details:", error));
-      */
+      
 
     // Fetch the survey responses
     fetch(
