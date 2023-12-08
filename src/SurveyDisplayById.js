@@ -89,13 +89,19 @@ function SurveyDisplayById() {
         );
 
       case "rating":
+      case "rating_scale":
         return (
           <div key={index} className="mb-4">
             <p className="font-medium text-gray-700">{question.question}</p>
+            <div className="flex justify-between">
+              <span>0</span>
+              <span>5</span>
+              <span>10</span>
+            </div>
             <input
               type="range"
-              min="1"
-              max={question.scale}
+              min="0"
+              max="10"
               className="mt-2 w-full"
               onChange={(e) => handleResponseChange(index, e.target.value)}
             />
@@ -103,7 +109,8 @@ function SurveyDisplayById() {
         );
 
       case "open_ended":
-      case "open_text": // Combining as they are similar
+      case "open_text":
+      case "text": // Combining as they are similar
         return (
           <div key={index} className="mb-4">
             <p className="font-medium text-gray-700">{question.question}</p>

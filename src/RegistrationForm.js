@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function RegistrationForm({ setUserRole }) {
+function RegistrationForm({ setUserDetails }) {
     // Initialize state variables
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
@@ -24,7 +24,7 @@ function RegistrationForm({ setUserRole }) {
             console.log("Token: ", data.accessToken); // Log the token in the console for debugging purposes
             localStorage.setItem('userEmail', email); // Store the user's email in localStorage
             // fetch user role here and update state in App
-            fetchUserRole().then(role => setUserRole(role)); 
+            fetchUserRole().then(role => setUserDetails(email, role)); 
             // Navigate to the home page
             navigate('/'); 
         } else {

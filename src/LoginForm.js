@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function LoginForm({setUserRole}) {
+function LoginForm({ setUserDetails }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ function LoginForm({setUserRole}) {
         localStorage.setItem("refreshToken", data.refreshToken);
         localStorage.setItem("userEmail", email);
         // fetch user role here and update state in App
-        fetchUserRole().then(role => setUserRole(role));
+        fetchUserRole().then(role => setUserDetails(email, role));
         navigate("/");
       } else {
         // Handle error in JSON response

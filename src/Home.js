@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SurveysList from './SurveysList';
+// import SurveysList from './SurveysList';
 
 function Home({ userRole }) {
   const isLoggedIn = !!localStorage.getItem('accessToken');
+  /*
   const userEmail = localStorage.getItem('userEmail');
 
   const handleLogout = () => {
@@ -11,20 +12,13 @@ function Home({ userRole }) {
     localStorage.removeItem('userEmail');
     window.location.reload(); // Refresh the page to update the UI
   };
+  */
 
   return (
     <div>
       <nav className="mb-4">
         {isLoggedIn ? (
           <>
-            <div className="mb-4">
-              Welcome, {userEmail} 
-              <span className="ml-2 text-sm text-gray-600">({userRole})</span> 
-              {/* Display user role next to the email */}
-            </div>
-            <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-              Logout
-            </button>
             {userRole === 'admin' && (
               <Link 
                 to="/create" 
@@ -51,7 +45,7 @@ function Home({ userRole }) {
           </>
         )}
       </nav>
-      <SurveysList userRole={userRole}/>
+      
     </div>
   );
 }
